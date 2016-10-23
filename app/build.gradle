@@ -1,20 +1,20 @@
 buildscript {
   dependencies {
-    classpath rootProject.ext.aptPlugin
+//    classpath rootProject.ext.aptPlugin
     classpath rootProject.ext.androidPlugin
-    classpath rootProject.ext.retrolambdaPlugin
-    classpath rootProject.ext.retrolambdaPluginLombok
+//    classpath rootProject.ext.retrolambdaPlugin
+//    classpath rootProject.ext.retrolambdaPluginLombok
     classpath rootProject.ext.psyncPlugin
     classpath rootProject.ext.versionsPlugin
   }
 
   // Exclude the lombok version that the android plugin depends on.
-  configurations.classpath.exclude group: 'com.android.tools.external.lombok'
+//  configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.flipboard.psync'
 apply plugin: 'com.github.ben-manes.versions'   // ./gradlew dependencyUpdates -Drevision=release
 
@@ -40,6 +40,13 @@ android {
     multiDexEnabled true
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     vectorDrawables.useSupportLibrary = true
+
+    jackOptions {
+      enabled = true
+      jackInProcess false
+      // Disable in 2.3 https://code.google.com/p/android/issues/detail?id=213471
+//      additionalParameters(["jack.incremental" : "true"])
+    }
 
     buildConfigField 'String', 'GIT_SHA', /"$gitSha"/
     buildConfigField 'long', 'GIT_TIMESTAMP', "$gitTimestamp"
@@ -119,7 +126,7 @@ configurations.all {
 }
 
 dependencies {
-  retrolambdaConfig rootProject.ext.retrolambda
+//  retrolambdaConfig rootProject.ext.retrolambda
 
   // Support libs
   supportCompile rootProject.ext.supportAnnotations
@@ -136,7 +143,8 @@ dependencies {
 
   // Square/JW
   compile rootProject.ext.butterKnife
-  apt rootProject.ext.butterKnifeCompiler
+  annotationProcessor rootProject.ext.butterKnifeCompiler
+  annotationProcessor "com.google.errorprone:javac:1.9.0-dev-r2973-2"
   compile rootProject.ext.okhttp
   compile rootProject.ext.okio
   compile rootProject.ext.moshi
@@ -173,7 +181,7 @@ dependencies {
   // Misc
   compile rootProject.ext.arraySetBackport
   compile rootProject.ext.barberApi
-  apt rootProject.ext.barberCompiler
+  annotationProcessor rootProject.ext.barberCompiler
   compile rootProject.ext.glide
   compile rootProject.ext.glideOkhttp
   compile rootProject.ext.gson
@@ -195,7 +203,7 @@ dependencies {
   debugCompile rootProject.ext.stethoOkHttp
 
   // Dagger
-  apt rootProject.ext.daggerCompiler
+  annotationProcessor rootProject.ext.daggerCompiler
   provided rootProject.ext.javax
   compile rootProject.ext.dagger
 
@@ -203,10 +211,10 @@ dependencies {
   provided rootProject.ext.autoValueAnnotations
   provided rootProject.ext.autoValueGson
   provided rootProject.ext.autoValueMoshi
-  apt rootProject.ext.autoValue
-  apt rootProject.ext.autoValueMoshi
-  apt rootProject.ext.autoValueGson
-  apt rootProject.ext.autoValueRedacted
+  annotationProcessor rootProject.ext.autoValue
+  annotationProcessor rootProject.ext.autoValueMoshi
+  annotationProcessor rootProject.ext.autoValueGson
+  annotationProcessor rootProject.ext.autoValueRedacted
 
   // Conductor
   compile rootProject.ext.conductor
@@ -221,4 +229,18 @@ dependencies {
   debugCompile rootProject.ext.leakCanary
   debugCompile rootProject.ext.haha
   releaseCompile rootProject.ext.leakCanaryNoop
+}
+
+def File getRuntimeJar() {
+  try {
+    final File javaBase = new File(System.getProperty("java.home")).getCanonicalFile()
+    File runtimeJar = new File(javaBase, "lib/rt.jar")
+    if (runtimeJar.exists()) {
+      return runtimeJar
+    }
+    runtimeJar = new File(javaBase, "jre/lib/rt.jar")
+    return runtimeJar.exists() ? runtimeJar : null
+  } catch (IOException e) {
+    throw new RuntimeException(e)
+  }
 }
