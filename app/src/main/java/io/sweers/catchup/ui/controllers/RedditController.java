@@ -16,8 +16,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.Binds;
 import dagger.Lazy;
 import dagger.Provides;
+import dagger.Subcomponent;
+import dagger.multibindings.IntoMap;
 import io.reactivex.Maybe;
 import io.sweers.catchup.R;
 import io.sweers.catchup.data.AutoValueGsonTypeAdapterFactory;
@@ -27,10 +30,12 @@ import io.sweers.catchup.data.reddit.RedditService;
 import io.sweers.catchup.data.reddit.model.RedditLink;
 import io.sweers.catchup.data.reddit.model.RedditObject;
 import io.sweers.catchup.data.reddit.model.RedditObjectDeserializer;
+import io.sweers.catchup.injection.BaseComponent;
+import io.sweers.catchup.injection.ControllerComponentBuilder;
+import io.sweers.catchup.injection.ControllerComponentBuilderHost;
+import io.sweers.catchup.injection.mapkeys.ControllerKey;
 import io.sweers.catchup.injection.qualifiers.ForApi;
 import io.sweers.catchup.injection.scopes.PerController;
-import io.sweers.catchup.ui.activity.ActivityComponent;
-import io.sweers.catchup.ui.activity.MainActivity;
 import io.sweers.catchup.ui.base.BaseNewsController;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -54,12 +59,16 @@ public final class RedditController extends BaseNewsController<RedditLink> {
 
   @Override
   protected void performInjection() {
-    DaggerRedditController_Component
-        .builder()
-        .module(new Module())
-        .activityComponent(((MainActivity) getActivity()).getComponent())
+    ((ControllerComponentBuilderHost) getActivity())
+        .getComponentBuilder(RedditController.class, RedditController.Component.Builder.class)
         .build()
         .inject(this);
+//    DaggerRedditController_Component
+//        .builder()
+//        .module(new Module())
+//        .activityComponent(((MainActivity) getActivity()).getComponent())
+//        .build()
+//        .inject(this);
   }
 
   @Override
@@ -103,16 +112,21 @@ public final class RedditController extends BaseNewsController<RedditLink> {
   }
 
   @PerController
-  @dagger.Component(
-      modules = Module.class,
-      dependencies = ActivityComponent.class
+  @Subcomponent(
+      modules = Module.class
   )
-  public interface Component {
-    void inject(RedditController controller);
+  public interface Component extends BaseComponent<RedditController> {
+    @Subcomponent.Builder
+    interface Builder extends ControllerComponentBuilder<RedditController, Component> {}
   }
 
   @dagger.Module
-  public static class Module {
+  public abstract static class Module {
+
+    @Binds
+    @IntoMap
+    @ControllerKey(RedditController.class)
+    abstract ControllerComponentBuilder redditControllerBuilder(Component.Builder impl);
 
     @Provides
     @PerController
