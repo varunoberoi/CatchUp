@@ -44,8 +44,7 @@ android {
     jackOptions {
       enabled = true
       jackInProcess false
-      // Disable in 2.3 https://code.google.com/p/android/issues/detail?id=213471
-//      additionalParameters(["jack.incremental" : "true"])
+      additionalParameters(["jack.incremental" : "true"])
     }
 
     buildConfigField 'String', 'GIT_SHA', /"$gitSha"/
