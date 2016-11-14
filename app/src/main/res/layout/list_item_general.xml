@@ -99,7 +99,10 @@
         tools:layout_conversion_absoluteWidth="157dp"
         tools:layout_conversion_absoluteX="16dp"
         tools:layout_conversion_absoluteY="40dp"
-        tools:text="Show HN: Into.js Hints"/>
+        tools:text="Show HN: Into.js Hints Here's some more text on this to overlap."
+        app:layout_constraintRight_toLeftOf="@+id/comments"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintHorizontal_bias="0.0"/>
 
 
     <io.sweers.catchup.ui.widget.CompatTextView
@@ -144,21 +147,23 @@
         tools:layout_conversion_absoluteY="64dp"
         tools:text="medium.com"/>
 
+    <io.sweers.catchup.ui.widget.CompatTextView
+        android:id="@+id/comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:drawableTint="?colorAccent"
+        android:gravity="center"
+        android:padding="16dp"
+        app:drawableTop="@drawable/ic_comment_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="339dp"
+        tools:text="39"/>
 
   </android.support.constraint.ConstraintLayout>
-
-  <io.sweers.catchup.ui.widget.BaselineGridTextView
-    android:id="@+id/comments"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="?selectableItemBackgroundBorderless"
-    android:clickable="true"
-    android:drawableTint="?colorAccent"
-    android:gravity="center"
-    android:padding="16dp"
-    android:drawableTop="@drawable/ic_comment_black_24dp"
-    tools:text="39"
-    />
 
 </io.sweers.catchup.ui.widget.ForegroundLinearLayout>
