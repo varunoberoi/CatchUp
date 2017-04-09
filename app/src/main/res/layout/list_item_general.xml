@@ -20,7 +20,7 @@
       android:orientation="vertical"
       android:padding="16dp">
 
-    <io.sweers.catchup.ui.widget.CompatTextView
+    <io.sweers.catchup.ui.widget.BaselineGridTextView
         android:id="@+id/score"
         style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         tools:layout_constraintTop_creator="1"
         tools:text="+ 128"/>
 
-    <io.sweers.catchup.ui.widget.CompatTextView
+    <io.sweers.catchup.ui.widget.BaselineGridTextView
         android:id="@+id/score_divider"
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/score"
         app:layout_constraintLeft_toRightOf="@+id/score"/>
 
-    <io.sweers.catchup.ui.widget.CompatTextView
+    <io.sweers.catchup.ui.widget.BaselineGridTextView
         android:id="@+id/tag"
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
         tools:text="tag"
         tools:visibility="visible"/>
 
-    <io.sweers.catchup.ui.widget.CompatTextView
+    <io.sweers.catchup.ui.widget.BaselineGridTextView
         android:id="@+id/tag_divider"
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
         tools:layout_conversion_absoluteX="96dp"
         tools:layout_conversion_absoluteY="17dp"/>
 
-    <io.sweers.catchup.ui.widget.CompatTextView
+    <io.sweers.catchup.ui.widget.BaselineGridTextView
         android:id="@+id/timestamp"
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
         app:layout_constraintHorizontal_bias="0.0"/>
 
 
-    <io.sweers.catchup.ui.widget.CompatTextView
+    <io.sweers.catchup.ui.widget.BaselineGridTextView
         android:id="@+id/author"
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="wrap_content"
@@ -119,7 +119,7 @@
         tools:layout_conversion_absoluteY="64dp"
         tools:text="pandanomic"/>
 
-    <io.sweers.catchup.ui.widget.CompatTextView
+    <io.sweers.catchup.ui.widget.BaselineGridTextView
         android:id="@+id/author_divider"
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
         tools:layout_conversion_absoluteX="87dp"
         tools:layout_conversion_absoluteY="64dp"/>
 
-    <io.sweers.catchup.ui.widget.CompatTextView
+    <io.sweers.catchup.ui.widget.BaselineGridTextView
         android:id="@+id/source"
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
         tools:layout_conversion_absoluteY="64dp"
         tools:text="medium.com"/>
 
-    <io.sweers.catchup.ui.widget.CompatTextView
+    <io.sweers.catchup.ui.widget.BaselineGridTextView
         android:id="@+id/comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
         android:drawableTint="?colorAccent"
         android:gravity="center"
         android:padding="16dp"
-        app:drawableTop="@drawable/ic_comment_black_24dp"
+        android:drawableTop="@drawable/ic_comment_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
