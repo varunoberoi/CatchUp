@@ -37,3 +37,4 @@ project(':imgur').projectDir = new File(rootDir, 'services/imgur')
 include ':github'
 project(':github').projectDir = new File(rootDir, 'services/github')
 include ':util'
+include ':app2'
