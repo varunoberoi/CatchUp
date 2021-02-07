@@ -6,6 +6,4 @@ RUN add-apt-repository ppa:maarten-fonville/android-studio && \
         android-studio \
         android-sdk-build-tools \
         android-sdk \
-        android-sdk-platform-23 --no-install-recommends --yes \
-        && apt-get clean \
-        && rm -rf /var/lib/apt/lists/*
+        android-sdk-platform-23 --no-install-recommends --yes
